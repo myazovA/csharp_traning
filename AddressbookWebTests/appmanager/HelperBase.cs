@@ -27,6 +27,10 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.XPath(XPATH)).Click();
         }
+        public void ClickElementWithID(string ID)
+        {
+            driver.FindElement(By.Id(ID)).Click();
+        }
         public void NavigateToURL(string URL)
         {
             driver.Navigate().GoToUrl(URL);

@@ -3,7 +3,7 @@
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class AddContactTests : TestBase
+    public class ContactCreationTests : TestBase
     {
         [Test]
         public void AddContactWithFirstAndLastName()

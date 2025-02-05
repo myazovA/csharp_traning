@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium;
+using OpenQA.Selenium.BiDi.Modules.Script;
 
 namespace WebAddressbookTests
 {
@@ -14,6 +15,41 @@ namespace WebAddressbookTests
             FillContactData(contact);
             ConfirmAddContact();
             manager.Navigator.ReturnToHomePage();
+            return this;
+        }
+        public ContactHelper Modify(int num, ContactData contact)
+        {
+            GoToEditContact(num);
+            FillContactData(contact);
+            ConfirmEditContact();
+            manager.Navigator.ReturnToHomePage();
+            return this;
+        }
+        public ContactHelper Remove(string ID)
+        {
+            ChooseContact(ID);
+            RemoveContact();
+            return this;
+        }
+
+        public ContactHelper ChooseContact(string ID)
+        {
+            ClickElementWithID(ID);
+            return this;
+        }
+        public ContactHelper RemoveContact()
+        {
+            ClickElementWithXPATH("//input[@value='Delete']");
+            return this;
+        }
+        public ContactHelper ConfirmEditContact()
+        {
+            ClickElementWithXPATH("//div[@id='content']/form/input[21]");
+            return this;
+        }
+        public ContactHelper GoToEditContact(int num)
+        {
+            ClickElementWithXPATH("//tr[" + num + "]/td[8]/a/img");
             return this;
         }
         public ContactHelper ConfirmAddContact()
