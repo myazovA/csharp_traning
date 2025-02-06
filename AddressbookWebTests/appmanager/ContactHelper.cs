@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium;
 using OpenQA.Selenium.BiDi.Modules.Script;
+using System;
 
 namespace WebAddressbookTests
 {
@@ -25,16 +26,16 @@ namespace WebAddressbookTests
             manager.Navigator.ReturnToHomePage();
             return this;
         }
-        public ContactHelper Remove(string ID)
+        public ContactHelper Remove(int num)
         {
-            ChooseContact(ID);
+            ChooseContact(num);
             RemoveContact();
             return this;
         }
 
-        public ContactHelper ChooseContact(string ID)
+        public ContactHelper ChooseContact(int num)
         {
-            ClickElementWithID(ID);
+            ClickElementWithXPATH("//tr[" + num + "]/td/input");
             return this;
         }
         public ContactHelper RemoveContact()
