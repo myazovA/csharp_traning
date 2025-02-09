@@ -3,7 +3,7 @@
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class ContactModificationTests : TestBase
+    public class ContactModificationTests : AuthTestBase
     {
         [Test]
         public void ContactModificationTest()
@@ -12,7 +12,7 @@ namespace WebAddressbookTests
             modContact.Firstname = "John";
             modContact.Lastname = "Sus";
 
-            app.Contacts.Modify(3, modContact);
+            app.Contacts.Modify(2, modContact);
         }
     }
 }

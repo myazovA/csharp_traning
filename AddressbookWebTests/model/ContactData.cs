@@ -4,29 +4,29 @@ namespace WebAddressbookTests
 {
     public class ContactData
     {
-        private string firstname = "";
-        private string middlename = "";
-        private string lastname = "";
-        private string nickname = "";
-        private string photo = "";
-        private string title = "";
-        private string company = "";
-        private string address = "";
-        private string home = "";
-        private string mobile = "";
-        private string work = "";
-        private string fax = "";
-        private string email = "";
-        private string email2 = "";
-        private string email3 = "";
-        private string homepage = "";
-        private string bday = "";
-        private string bmonth = "";
-        private string byear = "";
-        private string aday = "";
-        private string amonth = "";
-        private string ayear = "";
-        private string new_group = "";
+        private string firstname;                               
+        private string middlename;
+        private string lastname;
+        private string nickname;
+        private string photo;
+        private string title;
+        private string company;
+        private string address;
+        private string home;
+        private string mobile;
+        private string work;
+        private string fax;
+        private string email;
+        private string email2;
+        private string email3;
+        private string homepage;
+        private string bday;
+        private string bmonth;
+        private string byear;
+        private string aday;
+        private string amonth;
+        private string ayear;
+        private string new_group;
 
         public string Firstname
         {

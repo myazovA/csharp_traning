@@ -1,5 +1,4 @@
-﻿using System;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 
 namespace WebAddressbookTests
 {
@@ -14,11 +13,16 @@ namespace WebAddressbookTests
             InitGroupCreation();
             FillGroupForm(group);
             SubmitGroupCreation();
-            manager.Auth.Logout();
+            manager.Navigator.ReturnToGroupPage();
             return this;
         }
         public GroupHelper Remove(int num)
         {
+            if (! IsElementPresent(By.XPath("//div[@id='content']/form/span[2]/input")))
+            {
+                GroupData baseGroup = new GroupData("1");
+                Create(baseGroup);
+            }
             manager.Navigator.GoToGroupPage();
             ChooseGroup(num);
             DeleteGroup();
@@ -27,6 +31,11 @@ namespace WebAddressbookTests
         }
         public GroupHelper Modify(int num, GroupData newData)
         {
+            if (!IsElementPresent(By.XPath("//div[@id='content']/form/span[2]/input")))
+            {
+                GroupData baseGroup = new GroupData("1");
+                Create(baseGroup);
+            }
             manager.Navigator.GoToGroupPage();
             ChooseGroup(num);
             InitGroupModification();
@@ -55,17 +64,12 @@ namespace WebAddressbookTests
         }
         public GroupHelper FillGroupForm(GroupData group)
         {
-            ClickElementWithName("group_name");
-            ClearElementWithName("group_name");
-            SendKeysToElementWithName("group_name", group.Name);
-            ClickElementWithName("group_header");
-            ClearElementWithName("group_header");
-            SendKeysToElementWithName("group_header", group.Header);
-            ClickElementWithName("group_footer");
-            ClearElementWithName("group_footer");
-            SendKeysToElementWithName("group_footer", group.Footer);
+            Type("group_name", group.Name);
+            Type("group_header", group.Header);
+            Type("group_footer", group.Footer);
             return this;
         }
+
         public GroupHelper InitGroupCreation()
         {
             ClickElementWithName("new");

@@ -47,5 +47,34 @@ namespace WebAddressbookTests
         {
             new SelectElement(driver.FindElement(By.Name(name))).SelectByText(number);
         }
+        public void Type(string locator, string text)
+        {
+            if (text != null)
+            {
+                ClickElementWithName(locator);
+                ClearElementWithName(locator);
+                SendKeysToElementWithName(locator, text);
+            }
+        }
+        public bool IsElementPresent(By by)
+        {
+            try
+            {
+                driver.FindElement(by);
+                return true;
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+        }
+        public void FillContactListField(string fieldname, string number)
+        {
+            if (number != null)
+            {
+                ClickElementWithName(fieldname);
+                SelectElementFromList(fieldname, number);
+            }
+        }
     }
 }

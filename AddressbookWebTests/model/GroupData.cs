@@ -5,8 +5,8 @@ namespace WebAddressbookTests
     public class GroupData
     {
         private string name;
-        private string header = "";
-        private string footer = "";
+        private string header;
+        private string footer;
 
         public GroupData(string name)
         {

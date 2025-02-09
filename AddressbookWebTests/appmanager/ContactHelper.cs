@@ -1,7 +1,4 @@
-﻿using OpenQA.Selenium.Support.UI;
-using OpenQA.Selenium;
-using OpenQA.Selenium.BiDi.Modules.Script;
-using System;
+﻿using OpenQA.Selenium;
 
 namespace WebAddressbookTests
 {
@@ -20,6 +17,12 @@ namespace WebAddressbookTests
         }
         public ContactHelper Modify(int num, ContactData contact)
         {
+            if (! IsElementPresent(By.XPath("//tr[2]/td[8]/a/img")))
+            {
+                ContactData baseContact = new ContactData();
+                baseContact.Firstname = "Artem";
+                Create(baseContact);
+            }    
             GoToEditContact(num);
             FillContactData(contact);
             ConfirmEditContact();
@@ -28,6 +31,12 @@ namespace WebAddressbookTests
         }
         public ContactHelper Remove(int num)
         {
+            if (!IsElementPresent(By.XPath("//tr[2]/td[8]/a/img")))
+            {
+                ContactData baseContact = new ContactData();
+                baseContact.Firstname = "Artem";
+                Create(baseContact);
+            }
             ChooseContact(num);
             RemoveContact();
             return this;
@@ -60,42 +69,30 @@ namespace WebAddressbookTests
         }
         public ContactHelper FillContactData(ContactData contact)
         {
-            FillContactTextField("firstname", contact.Firstname);
-            FillContactTextField("middlename", contact.Middlename);
-            FillContactTextField("lastname", contact.Lastname);
-            FillContactTextField("nickname", contact.Nickname);
-            //FillContactTextField("photo", contact.Photo);
-            FillContactTextField("title", contact.Title);
-            FillContactTextField("company", contact.Company);
-            FillContactTextField("address", contact.Address);
-            FillContactTextField("home", contact.Home);
-            FillContactTextField("mobile", contact.Mobile);
-            FillContactTextField("work", contact.Work);
-            FillContactTextField("fax", contact.Fax);
-            FillContactTextField("email", contact.Email);
-            FillContactTextField("email2", contact.Email2);
-            FillContactTextField("email3", contact.Email3);
-            FillContactTextField("homepage", contact.Homepage);
-            /*FillContactTextField("bday", contact.Bday);
+            Type("firstname", contact.Firstname);
+            Type("firstname", contact.Firstname);
+            Type("middlename", contact.Middlename);
+            Type("lastname", contact.Lastname);
+            Type("nickname", contact.Nickname);
+            Type("photo", contact.Photo);
+            Type("title", contact.Title);
+            Type("company", contact.Company);
+            Type("address", contact.Address);
+            Type("home", contact.Home);
+            Type("mobile", contact.Mobile);
+            Type("work", contact.Work);
+            Type("fax", contact.Fax);
+            Type("email", contact.Email);
+            Type("email2", contact.Email2);
+            Type("email3", contact.Email3);
+            Type("homepage", contact.Homepage);
+            FillContactListField("bday", contact.Bday);
             FillContactListField("bmonth", contact.Bmonth);
-            FillContactTextField("byear", contact.Byear);
+            Type("byear", contact.Byear);
             FillContactListField("aday", contact.Aday);
             FillContactListField("amonth", contact.Amonth);
-            FillContactTextField("ayear", contact.Ayear);
-            FillContactListField("new_group", contact.New_group);*/
-            return this;
-        }
-        public ContactHelper FillContactListField(string fieldname, string number)
-        {
-            ClickElementWithName(fieldname);
-            SelectElementFromList(fieldname, number);
-            return this;
-        }
-        public ContactHelper FillContactTextField(string fieldname, string key)
-        {
-            ClickElementWithName(fieldname);
-            ClearElementWithName(fieldname);
-            SendKeysToElementWithName(fieldname, key);
+            Type("ayear", contact.Ayear);
+            FillContactListField("new_group", contact.New_group);
             return this;
         }
     }

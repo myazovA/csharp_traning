@@ -3,7 +3,7 @@
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class GroupCreationTests : TestBase
+    public class GroupCreationTests : AuthTestBase
     {
         [Test]
         public void GroupCreationTest()
@@ -18,8 +18,6 @@ namespace WebAddressbookTests
         public void EmptyGroupCreationTest()
         {
             GroupData group = new GroupData("");
-            group.Header = "";
-            group.Footer = "";
 
             app.Groups.Create(group);
         }
