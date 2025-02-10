@@ -16,13 +16,7 @@ namespace WebAddressbookTests
             return this;
         }
         public ContactHelper Modify(int num, ContactData contact)
-        {
-            if (! IsElementPresent(By.XPath("//tr[2]/td[8]/a/img")))
-            {
-                ContactData baseContact = new ContactData();
-                baseContact.Firstname = "Artem";
-                Create(baseContact);
-            }    
+        {   
             GoToEditContact(num);
             FillContactData(contact);
             ConfirmEditContact();
@@ -31,15 +25,18 @@ namespace WebAddressbookTests
         }
         public ContactHelper Remove(int num)
         {
+            ChooseContact(num);
+            RemoveContact();
+            return this;
+        }
+        public void CreateContactIfNotExist()
+        {
             if (!IsElementPresent(By.XPath("//tr[2]/td[8]/a/img")))
             {
                 ContactData baseContact = new ContactData();
                 baseContact.Firstname = "Artem";
                 Create(baseContact);
             }
-            ChooseContact(num);
-            RemoveContact();
-            return this;
         }
 
         public ContactHelper ChooseContact(int num)

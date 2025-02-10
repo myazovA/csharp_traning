@@ -8,6 +8,8 @@ namespace WebAddressbookTests
         [Test]
         public void ContactModificationTest()
         {
+            app.Contacts.CreateContactIfNotExist();
+
             ContactData modContact = new ContactData();
             modContact.Firstname = "John";
             modContact.Lastname = "Sus";

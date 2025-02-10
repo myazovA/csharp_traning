@@ -7,6 +7,8 @@ namespace WebAddressbookTests
         [Test]
         public void GroupModificationTest()
         {
+            app.Groups.CreateGroupIfNotExist();
+
             GroupData newData = new GroupData("asd");
             newData.Header = "asd";
             newData.Footer = "asd";

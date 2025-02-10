@@ -18,11 +18,6 @@ namespace WebAddressbookTests
         }
         public GroupHelper Remove(int num)
         {
-            if (! IsElementPresent(By.XPath("//div[@id='content']/form/span[2]/input")))
-            {
-                GroupData baseGroup = new GroupData("1");
-                Create(baseGroup);
-            }
             manager.Navigator.GoToGroupPage();
             ChooseGroup(num);
             DeleteGroup();
@@ -31,11 +26,6 @@ namespace WebAddressbookTests
         }
         public GroupHelper Modify(int num, GroupData newData)
         {
-            if (!IsElementPresent(By.XPath("//div[@id='content']/form/span[2]/input")))
-            {
-                GroupData baseGroup = new GroupData("1");
-                Create(baseGroup);
-            }
             manager.Navigator.GoToGroupPage();
             ChooseGroup(num);
             InitGroupModification();
@@ -45,6 +35,14 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public void CreateGroupIfNotExist()
+        {
+            if (!IsElementPresent(By.XPath("//div[@id='content']/form/span[2]/input")))
+            {
+                GroupData baseGroup = new GroupData("1");
+                Create(baseGroup);
+            }
+        }
         public GroupHelper SubmitGroupModification()
         {
             ClickElementWithName("update");
