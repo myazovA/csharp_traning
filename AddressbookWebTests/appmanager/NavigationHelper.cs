@@ -18,6 +18,15 @@ namespace WebAddressbookTests
             NavigateToURL(baseURL);
             return this;
         }
+        public NavigationHelper GoToHomePage()
+        {
+            if (driver.Url == baseURL)
+            {
+                return this;
+            }
+            ClickElementWithText("home");
+            return this;
+        }
         public NavigationHelper ReturnToHomePage()
         {
             if (driver.Url == baseURL)

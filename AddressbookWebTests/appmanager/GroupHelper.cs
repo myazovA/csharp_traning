@@ -1,4 +1,6 @@
-﻿using OpenQA.Selenium;
+﻿using System;
+using System.Collections.Generic;
+using OpenQA.Selenium;
 
 namespace WebAddressbookTests
 {
@@ -37,9 +39,10 @@ namespace WebAddressbookTests
 
         public void CreateGroupIfNotExist()
         {
-            if (!IsElementPresent(By.XPath("//div[@id='content']/form/span[2]/input")))
+            manager.Navigator.GoToGroupPage();
+            if (!IsElementPresent(By.XPath("//div[@id='content']/form/span/input")))
             {
-                GroupData baseGroup = new GroupData("1");
+                GroupData baseGroup = new GroupData("0");
                 Create(baseGroup);
             }
         }
@@ -80,8 +83,20 @@ namespace WebAddressbookTests
         }
         public GroupHelper ChooseGroup(int index)
         {
-            ClickElementWithXPATH("//div[@id='content']/form/span[" + index + "]/input");
+            ClickElementWithXPATH("//div[@id='content']/form/span[" + (index+1) + "]/input");
             return this;
+        }
+
+        public List<GroupData> GetGroupList()
+        {
+            manager.Navigator.GoToGroupPage();
+            List<GroupData> groups = new List<GroupData>();
+            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
+            foreach (IWebElement element in elements)
+            {
+                groups.Add(new GroupData(element.Text));
+            }
+            return groups;
         }
     }
 }

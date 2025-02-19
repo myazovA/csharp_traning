@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using System.Collections.Generic;
+using OpenQA.Selenium;
 
 namespace WebAddressbookTests
 {
@@ -27,21 +28,21 @@ namespace WebAddressbookTests
         {
             ChooseContact(num);
             RemoveContact();
+            manager.Navigator.GoToHomePage();
             return this;
         }
         public void CreateContactIfNotExist()
         {
             if (!IsElementPresent(By.XPath("//tr[2]/td[8]/a/img")))
             {
-                ContactData baseContact = new ContactData();
-                baseContact.Firstname = "Artem";
+                ContactData baseContact = new ContactData("Artem", "Myazov");
                 Create(baseContact);
             }
         }
 
         public ContactHelper ChooseContact(int num)
         {
-            ClickElementWithXPATH("//tr[" + num + "]/td/input");
+            ClickElementWithXPATH("//tr[" + (num+2) + "]/td/input");
             return this;
         }
         public ContactHelper RemoveContact()
@@ -56,7 +57,7 @@ namespace WebAddressbookTests
         }
         public ContactHelper GoToEditContact(int num)
         {
-            ClickElementWithXPATH("//tr[" + num + "]/td[8]/a/img");
+            ClickElementWithXPATH("//tr[" + (num + 2) + "]/td[8]/a/img");
             return this;
         }
         public ContactHelper ConfirmAddContact()
@@ -91,6 +92,20 @@ namespace WebAddressbookTests
             Type("ayear", contact.Ayear);
             FillContactListField("new_group", contact.New_group);
             return this;
+        }
+        public List<ContactData> GetContactList()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+            ICollection<IWebElement> rows = driver.FindElements(By.Name("entry"));
+            foreach (IWebElement row in rows)
+            {
+                IList<IWebElement> cells = row.FindElements(By.TagName("td"));
+                string lastName = cells[1].Text;
+                string firstName = cells[2].Text;
+
+                contacts.Add(new ContactData(firstName, lastName));
+            }
+            return contacts;
         }
     }
 }
