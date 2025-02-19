@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Security.Cryptography;
 using NUnit.Framework;
 
 namespace WebAddressbookTests
@@ -12,8 +13,9 @@ namespace WebAddressbookTests
             ContactData contact = new ContactData("Artem", "Myazov");
 
             List<ContactData> oldContacts = app.Contacts.GetContactList();
-
             app.Contacts.Create(contact);
+
+            Assert.AreEqual(oldContacts.Count + 1, app.Contacts.GetContactCount());
 
             List<ContactData> newContacts = app.Contacts.GetContactList();
 
@@ -33,6 +35,8 @@ namespace WebAddressbookTests
             List<ContactData> oldContacts = app.Contacts.GetContactList();
 
             app.Contacts.Create(contact);
+
+            Assert.AreEqual(oldContacts.Count + 1, app.Contacts.GetContactCount());
 
             List<ContactData> newContacts = app.Contacts.GetContactList();
 

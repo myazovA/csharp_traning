@@ -49,6 +49,7 @@ namespace WebAddressbookTests
         public GroupHelper SubmitGroupModification()
         {
             ClickElementWithName("update");
+            groupCache = null;
             return this;
         }
 
@@ -61,6 +62,7 @@ namespace WebAddressbookTests
         public GroupHelper SubmitGroupCreation()
         {
             ClickElementWithName("submit");
+            groupCache = null;
             return this;
         }
         public GroupHelper FillGroupForm(GroupData group)
@@ -79,6 +81,7 @@ namespace WebAddressbookTests
         public GroupHelper DeleteGroup()
         {
             ClickElementWithName("delete");
+            groupCache = null;
             return this;
         }
         public GroupHelper ChooseGroup(int index)
@@ -86,17 +89,27 @@ namespace WebAddressbookTests
             ClickElementWithXPATH("//div[@id='content']/form/span[" + (index+1) + "]/input");
             return this;
         }
-
+        private List<GroupData> groupCache = null;
         public List<GroupData> GetGroupList()
         {
-            manager.Navigator.GoToGroupPage();
-            List<GroupData> groups = new List<GroupData>();
-            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
-            foreach (IWebElement element in elements)
+            if (groupCache == null)
             {
-                groups.Add(new GroupData(element.Text));
+                groupCache = new List<GroupData>();
+                manager.Navigator.GoToGroupPage();
+                ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
+                foreach (IWebElement element in elements)
+                {
+                    groupCache.Add(new GroupData(element.Text)
+                    {
+                        Id = element.FindElement(By.TagName("input")).GetAttribute("value")
+                    });
+                }
             }
-            return groups;
+            return new List<GroupData>(groupCache);
+        }
+        public int GetGroupCount()
+        {
+            return driver.FindElements(By.CssSelector("span.group")).Count;
         }
     }
 }

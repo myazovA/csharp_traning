@@ -48,11 +48,13 @@ namespace WebAddressbookTests
         public ContactHelper RemoveContact()
         {
             ClickElementWithXPATH("//input[@value='Delete']");
+            contactCache = null;
             return this;
         }
         public ContactHelper ConfirmEditContact()
         {
             ClickElementWithXPATH("//div[@id='content']/form/input[21]");
+            contactCache = null;
             return this;
         }
         public ContactHelper GoToEditContact(int num)
@@ -63,6 +65,7 @@ namespace WebAddressbookTests
         public ContactHelper ConfirmAddContact()
         {
             ClickElementWithXPATH("//div[@id='content']/form/input[20]");
+            contactCache = null;
             return this;
         }
         public ContactHelper FillContactData(ContactData contact)
@@ -93,19 +96,31 @@ namespace WebAddressbookTests
             FillContactListField("new_group", contact.New_group);
             return this;
         }
+        private List<ContactData> contactCache = null;
         public List<ContactData> GetContactList()
         {
-            List<ContactData> contacts = new List<ContactData>();
-            ICollection<IWebElement> rows = driver.FindElements(By.Name("entry"));
-            foreach (IWebElement row in rows)
+            if (contactCache == null)
             {
-                IList<IWebElement> cells = row.FindElements(By.TagName("td"));
-                string lastName = cells[1].Text;
-                string firstName = cells[2].Text;
+                contactCache = new List<ContactData>();
+                List<ContactData> contacts = new List<ContactData>();
+                ICollection<IWebElement> rows = driver.FindElements(By.Name("entry"));
+                foreach (IWebElement row in rows)
+                {
+                    IList<IWebElement> cells = row.FindElements(By.TagName("td"));
+                    string lastName = cells[1].Text;
+                    string firstName = cells[2].Text;
 
-                contacts.Add(new ContactData(firstName, lastName));
+                    contactCache.Add(new ContactData(firstName, lastName)
+                    {
+                        Id = row.FindElement(By.TagName("input")).GetAttribute("id")
+                    });
+                }
             }
-            return contacts;
+            return new List<ContactData>(contactCache);
+        }
+        public int GetContactCount()
+        {
+            return driver.FindElements(By.Name("entry")).Count;
         }
     }
 }
