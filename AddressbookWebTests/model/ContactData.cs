@@ -43,7 +43,7 @@ namespace WebAddressbookTests
             {
                 return 1;
             }
-            return Firstname.CompareTo(other.Firstname);
+            return Firstname.CompareTo(other.Firstname) + Lastname.CompareTo(other.Lastname);
         }
 
         public bool Equals(ContactData other)
