@@ -6,6 +6,9 @@ namespace WebAddressbookTests
 {
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
+        private string allPhones;
+        private string allEmails;
+
         public ContactData(string firstname, string lastname)
         {
             Firstname = firstname;
@@ -23,10 +26,48 @@ namespace WebAddressbookTests
         public string Home {  get; set; }
         public string Mobile {  get; set; }
         public string Work {  get; set; }
+        public string AllPhones 
+        {
+            get 
+            {
+                if (allPhones != null)
+                {
+                    return allPhones;
+                }
+                else
+                {
+                    return (CleanUp(Home) + CleanUp(Mobile) + CleanUp(Work)).Trim();
+                }
+
+            }
+            set 
+            { 
+                allPhones = value;
+            }
+        }
+
         public string Fax {  get; set; }
         public string Email {  get; set; }
         public string Email2 {  get; set; }
         public string Email3 {  get; set; }
+        public string AllEmails
+        {
+            get
+            {
+                if (allEmails != null)
+                {
+                    return allEmails;
+                }
+                else
+                {
+                    return (Email + "\r\n" + Email2 + "\r\n" + Email3).Trim();
+                }
+            }
+            set
+            {
+                allEmails = value;
+            }
+        }
         public string Homepage {  get; set; }
         public string Bday {  get; set; }
         public string Bmonth {  get; set; }
@@ -72,6 +113,14 @@ namespace WebAddressbookTests
         public override string ToString()
         {
             return  Firstname + " " + Lastname;
+        }
+        private string CleanUp(string phone)
+        {
+            if (phone == null || phone == "")
+            {
+                return "";
+            }
+            return phone.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "") +"\r\n";
         }
     }
 }
