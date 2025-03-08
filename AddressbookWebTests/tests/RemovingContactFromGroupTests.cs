@@ -14,9 +14,20 @@ namespace WebAddressbookTests
         [Test]
         public void TestRemovingContactFromGroup()
         {
+            app.Contacts.CreateContactIfNotExist();
+            app.Groups.CreateGroupIfNotExist();
+
             GroupData group = GroupData.GetAll()[0];
             List<ContactData> oldList = group.GetContacts();
-            ContactData contact = oldList.First();
+            ContactData contact;
+
+            if (oldList.Count == 0)
+            {
+                contact = ContactData.GetAll().First();
+                app.Contacts.AddContactToGroup(contact, group);
+                oldList = group.GetContacts();
+            }
+            contact = oldList[0];
 
             app.Contacts.RemoveContactFromGroup(contact, group);
 

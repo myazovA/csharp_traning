@@ -21,7 +21,7 @@ namespace WebAddressbookTests
         }
         public ContactHelper Modify(ContactData oldContact, ContactData newContact)
         {   
-            GoToEditContact(oldContact.Id);
+            GoToEditContactById(oldContact.Id);
             FillContactData(newContact);
             ConfirmEditContact();
             manager.Navigator.ReturnToHomePage();
@@ -60,9 +60,14 @@ namespace WebAddressbookTests
             contactCache = null;
             return this;
         }
-        public ContactHelper GoToEditContact(string id)
+        public ContactHelper GoToEditContactById(string id)
         {
             ClickElementWithXPATH("//td[8]/a[@href='edit.php?id="+id+"']/img");
+            return this;
+        }
+        public ContactHelper GoToEditContact(int num)
+        {
+            ClickElementWithXPATH("//tr["+(num+2)+"]/td[8]/a/img");
             return this;
         }
         public ContactHelper GoToContactDetails(int num)
@@ -149,10 +154,10 @@ namespace WebAddressbookTests
             };
         }
 
-        public ContactData GetContactInformationFromEditForm(string id)
+        public ContactData GetContactInformationFromEditForm(int num)
         {
             manager.Navigator.GoToHomePage();
-            GoToEditContact(id);
+            GoToEditContact(num);
             string firstName = driver.FindElement(By.Name("firstname")).GetAttribute("value");
             string middlename = driver.FindElement(By.Name("middlename")).GetAttribute("value");
             string lastName = driver.FindElement(By.Name("lastname")).GetAttribute("value");

@@ -264,5 +264,15 @@ namespace WebAddressbookTests
                         .Where(x => x.Deprecated == null) select c).ToList();
             }
         }
+        public static ContactData GetLast()
+        {
+            using (AddressbookDB db = new AddressbookDB())
+            {
+                return db.Contacts
+                         .Where(x => x.Deprecated == null)
+                         .OrderByDescending(x => x.Id)
+                         .FirstOrDefault();
+            }
+        }
     }
 }
