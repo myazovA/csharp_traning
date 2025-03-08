@@ -107,6 +107,8 @@ namespace WebAddressbookTests
         public string New_group { get; set; }
         [Column(Name = "id"), PrimaryKey, Identity]
         public string Id { get; set; }
+        [Column(Name ="deprecated")]
+        public string Deprecated { get; set; }
         public string detailsName { get; set; }
         public string detailsPhone { get; set; }
 
@@ -258,7 +260,8 @@ namespace WebAddressbookTests
         {
             using (AddressbookDB db = new AddressbookDB())
             {
-                return (from c in db.Contacts select c).ToList();
+                return (from c in db.Contacts
+                        .Where(x => x.Deprecated == null) select c).ToList();
             }
         }
     }
