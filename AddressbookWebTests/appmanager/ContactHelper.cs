@@ -18,17 +18,17 @@ namespace WebAddressbookTests
             manager.Navigator.ReturnToHomePage();
             return this;
         }
-        public ContactHelper Modify(int num, ContactData contact)
+        public ContactHelper Modify(ContactData oldContact, ContactData newContact)
         {   
-            GoToEditContact(num);
-            FillContactData(contact);
+            GoToEditContact(oldContact.Id);
+            FillContactData(newContact);
             ConfirmEditContact();
             manager.Navigator.ReturnToHomePage();
             return this;
         }
-        public ContactHelper Remove(int num)
+        public ContactHelper Remove(ContactData contact)
         {
-            ChooseContact(num);
+            ChooseContact(contact.Id);
             RemoveContact();
             manager.Navigator.GoToHomePage();
             return this;
@@ -42,9 +42,9 @@ namespace WebAddressbookTests
             }
         }
 
-        public ContactHelper ChooseContact(int num)
+        public ContactHelper ChooseContact(string id)
         {
-            ClickElementWithXPATH("//tr[" + (num+2) + "]/td/input");
+            ClickElementWithXPATH("//input[@name='selected[]' and @value='" + id + "']");
             return this;
         }
         public ContactHelper RemoveContact()
@@ -59,9 +59,9 @@ namespace WebAddressbookTests
             contactCache = null;
             return this;
         }
-        public ContactHelper GoToEditContact(int num)
+        public ContactHelper GoToEditContact(string id)
         {
-            ClickElementWithXPATH("//tr[" + (num + 2) + "]/td[8]/a/img");
+            ClickElementWithXPATH("//td[8]/a[@href='edit.php?id="+id+"']/img");
             return this;
         }
         public ContactHelper GoToContactDetails(int num)
@@ -148,10 +148,10 @@ namespace WebAddressbookTests
             };
         }
 
-        public ContactData GetContactInformationFromEditForm(int index)
+        public ContactData GetContactInformationFromEditForm(string id)
         {
             manager.Navigator.GoToHomePage();
-            GoToEditContact(index);
+            GoToEditContact(id);
             string firstName = driver.FindElement(By.Name("firstname")).GetAttribute("value");
             string middlename = driver.FindElement(By.Name("middlename")).GetAttribute("value");
             string lastName = driver.FindElement(By.Name("lastname")).GetAttribute("value");

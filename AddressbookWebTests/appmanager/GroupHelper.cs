@@ -18,18 +18,18 @@ namespace WebAddressbookTests
             manager.Navigator.ReturnToGroupPage();
             return this;
         }
-        public GroupHelper Remove(int num)
+        public GroupHelper Remove(GroupData group)
         {
             manager.Navigator.GoToGroupPage();
-            ChooseGroup(num);
+            ChooseGroup(group.Id);
             DeleteGroup();
             manager.Navigator.ReturnToGroupPage();
             return this;
         }
-        public GroupHelper Modify(int num, GroupData newData)
+        public GroupHelper Modify(GroupData group, GroupData newData)
         {
             manager.Navigator.GoToGroupPage();
-            ChooseGroup(num);
+            ChooseGroup(group.Id);
             InitGroupModification();
             FillGroupForm(newData);
             SubmitGroupModification();
@@ -84,9 +84,9 @@ namespace WebAddressbookTests
             groupCache = null;
             return this;
         }
-        public GroupHelper ChooseGroup(int index)
+        public GroupHelper ChooseGroup(string id)
         {
-            ClickElementWithXPATH("//div[@id='content']/form/span[" + (index+1) + "]/input");
+            ClickElementWithXPATH("//input[@name='selected[]' and @value='" + id + "']");
             return this;
         }
         private List<GroupData> groupCache = null;
